@@ -1,92 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Регистрация рекламы - Xcortex</title>
 <style>
-  body {
-    background-color: bisque;
-    color: #000000;
-  }
-  button {
-    background-color: black;
-    color: white;
-    padding: 16px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-  }
-  input {
-    background-color: black;
-    color: white;
-    border-radius: 25px;
-    padding: 10px;
-    border: none;
-    width: 100%;
-    box-sizing: border-box;
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:bisque;color:#000;font-family:Arial,sans-serif;padding:20px;max-width:800px;margin:0 auto}
+h1{font-size:clamp(1.2rem,4vw,1.8rem);margin:15px 0}
+h3{font-size:1.1rem;margin:10px 0}
+#Primer{background:red;padding:15px;border-radius:10px;margin:15px 0}
+#Primer img{max-width:100%;height:auto;margin-top:10px}
+button{background:black;color:white;padding:14px 28px;border-radius:30px;border:none;cursor:pointer;font-size:1rem;margin:10px 5px}
+button:hover{opacity:0.8}
+input{background:black;color:white;border-radius:25px;padding:12px;border:none;width:100%;font-size:1rem;margin:8px 0}
+input::placeholder{color:#ccc}
+#Registr{display:none;background:white;color:black;border-radius:25px;padding:20px;margin-top:15px}
+.help{font-size:0.85rem;color:#666;display:block;margin:5px 0}
+.err{color:#d32f2f;font-size:0.85rem;display:none;margin-top:3px}
+.ok{background:#4caf50;color:white;padding:12px;border-radius:12px;margin:10px 0;display:none}
+@media(max-width:600px){body{padding:10px}button{width:100%;margin:5px 0}}
 </style>
+</head>
+<body>
 
 <h1>Размещение рекламы на сайте от Xcortex</h1>
+
 <h3>Пример:</h3>
-<div id="Primer" style="background-color: red;">
-  <h4>Xcortex реклама ЕРС: Xctrx_XXX_XXX.xcortex</h4>
-  <img src="https://img.magnific.com/premium-photo/black-leather-font-design-abstract-alphabet-font-realistic-typography-x_67155-13365.jpg?semt=ais_hybrid&w=740&q=80" width="200"> 
+<div id="Primer">
+<h4>Xcortex реклама ЕРС: Xctrx_XXX_XXX.xcortex</h4>
+<img src="https://img.magnific.com/premium-photo/black-leather-font-design-abstract-alphabet-font-realistic-typography-x_67155-13365.jpg?semt=ais_hybrid&w=740&q=80" alt="Пример">
 </div>
+
 <h1><b>ВНИМАНИЕ! ЭТО САЙТ РЕГИСТРАЦИИ РЕКЛАМЫ, А НЕ РАЗМЕЩЕНИЯ.</b></h1>
 <h1><em>Ваша реклама появится автоматически на сайте XcortexWIKI</em></h1>
 
-<button onclick="RegistrReklam()">
-  Зарегистрировать рекламу
-</button>
+<button onclick="showForm()">Зарегистрировать рекламу</button>
 
-<div id="Registr" style="display: none; color: black; background-color: white; border-radius: 30px; padding: 25px; margin-top: 14px;">
-  <h3>Название баннера вашей рекламы</h3>
-  <input type="text" placeholder="Например: Летняя распродажа" id="name">
+<div id="okMsg" class="ok">✅ Почтовый клиент открыт!</div>
 
-  <h3>ЕРС и ERID</h3>
-  <input type="text" placeholder="Только ЕРС" id="ers">
-  <input type="text" placeholder="ТОЛЬКО ERID" id="ERID">
+<div id="Registr">
+<h3>Название баннера *</h3>
+<input type="text" id="name" placeholder="Например: Летняя распродажа">
+<div class="err" id="e1">Введите название</div>
 
-  <h3>Ссылка на изображение (URL)</h3>
-  <small>Вставьте сюда ссылку на картинку (например, из Imgur, Google Drive, GitHub). Файл не прикрепляется, но ссылка будет в письме.</small>
-  <br><br>
-  <input type="url" placeholder="https://..." id="imageLink">
+<h3>ЕРС *</h3>
+<input type="text" id="ers" placeholder="Только ЕРС">
+<div class="err" id="e2">Введите ЕРС</div>
 
-  <h3>Номер телефона для связи</h3>
-  <input type="text" placeholder="7 (***) *** **-**" id="number">
+<h3>ERID *</h3>
+<input type="text" id="ERID" placeholder="ТОЛЬКО ERID">
+<div class="err" id="e3">Введите ERID</div>
 
-  <button id="sendBtn" style="margin-top: 20px;">
-    Отправить данные
-  </button>
+<h3>Ссылка на изображение (URL)</h3>
+<small class="help">Вставьте ссылку на картинку (Imgur, Google Drive и т.д.)</small>
+<input type="url" id="imageLink" placeholder="https://...">
 
-  <h4>Наш номер и электронная почта для связи:</h4>
-  <p>79854573125</p>
-  <p>artem.ovsyankin33@gmail.com</p>
+<h3>Номер телефона для связи *</h3>
+<input type="tel" id="number" placeholder="7 (***) *** **-**" maxlength="16">
+<div class="err" id="e4">Введите номер</div>
+
+<button onclick="sendData()">Отправить данные</button>
+<button onclick="closeForm()" style="background:#d32f2f">Закрыть</button>
+
+<h4>Контакты:</h4>
+<p>📞 79854573125</p>
+<p>📧 artem.ovsyankin33@gmail.com</p>
 </div>
 
 <script>
-  function RegistrReklam() {
-    document.querySelector('#Registr').style.display = "block";
-  }
+// Маска телефона
+document.getElementById('number').addEventListener('input',function(e){
+let v=e.target.value.replace(/\D/g,'');
+if(v.length>0){
+if(v[0]=='7'||v[0]=='8')v=v.substring(1);
+let f='7';
+if(v.length>0)f+='('+v.substring(0,3);
+if(v.length>=3)f+=') '+v.substring(3,6);
+if(v.length>=6)f+=' '+v.substring(6,8);
+if(v.length>=8)f+='-'+v.substring(8,10);
+e.target.value=f;
+}});
 
-  document.getElementById('sendBtn').addEventListener('click', function() {
-    const valName = encodeURIComponent(document.getElementById('name').value);
-    const valErs = encodeURIComponent(document.getElementById('ers').value);
-    const valErid = encodeURIComponent(document.getElementById('ERID').value);
-    const valImage = encodeURIComponent(document.getElementById('imageLink').value);
-    const valNumber = encodeURIComponent(document.getElementById('number').value);
+function showForm(){
+document.getElementById('Registr').style.display='block';
+document.querySelectorAll('.err').forEach(e=>e.style.display='none');
+}
 
-    const lineBreak = '%0A';
-    const subject = encodeURIComponent('Заявка с сайта: регистрация рекламы');
+function closeForm(){
+document.getElementById('Registr').style.display='none';
+}
 
-    // Подписи к полям заданы здесь — это то, что увидит получатель письма
-    const bodyParts = [
-      'Название баннера: ' + valName,
-      'ЕРС: ' + valErs,
-      'ERID: ' + valErid,
-      'Ссылка на изображение: ' + (valImage || 'не указана'),
-      'Номер телефона: ' + valNumber
-    ];
+function sendData(){
+// Сброс ошибок
+document.querySelectorAll('.err').forEach(e=>e.style.display='none');
 
-    const body = bodyParts.join(lineBreak);
-    const mailtoLink = `mailto:artem.ovsyankin33@gmail.com?subject=${subject}&body=${body}`;
+// Валидация
+let ok=true;
+const name=document.getElementById('name').value.trim();
+const ers=document.getElementById('ers').value.trim();
+const erid=document.getElementById('ERID').value.trim();
+const num=document.getElementById('number').value.replace(/\D/g,'');
 
-    window.location.href = mailtoLink;
-  });
+if(!name){document.getElementById('e1').style.display='block';ok=false;}
+if(!ers){document.getElementById('e2').style.display='block';ok=false;}
+if(!erid){document.getElementById('e3').style.display='block';ok=false;}
+if(num.length<11){document.getElementById('e4').style.display='block';ok=false;}
+
+if(!ok)return;
+
+// Сбор данных
+const img=document.getElementById('imageLink').value||'не указана';
+const body='Название баннера: '+name+'\n'+
+'ЕРС: '+ers+'\n'+
+'ERID: '+erid+'\n'+
+'Ссылка на изображение: '+img+'\n'+
+'Номер телефона: '+document.getElementById('number').value;
+
+const subject='Заявка с сайта: регистрация рекламы';
+
+// Формирование mailto
+const mailto='mailto:artem.ovsyankin33@gmail.com?subject='+
+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+
+// Показываем сообщение
+document.getElementById('okMsg').style.display='block';
+setTimeout(()=>document.getElementById('okMsg').style.display='none',4000);
+
+// Открываем почту двумя способами
+window.location.href=mailto;
+
+// Запасной вариант через ссылку
+setTimeout(()=>{
+const a=document.createElement('a');
+a.href=mailto;
+a.style.display='none';
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+},200);
+}
 </script>
+
+</body>
+</html>
