@@ -1,0 +1,92 @@
+<style>
+  body {
+    background-color: bisque;
+    color: #000000;
+  }
+  button {
+    background-color: black;
+    color: white;
+    padding: 16px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+  }
+  input {
+    background-color: black;
+    color: white;
+    border-radius: 25px;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>
+
+<h1>Размещение рекламы на сайте от Xcortex</h1>
+<h3>Пример:</h3>
+<div id="Primer" style="background-color: red;">
+  <h4>Xcortex реклама ЕРС: Xctrx_XXX_XXX.xcortex</h4>
+  <img src="https://img.magnific.com/premium-photo/black-leather-font-design-abstract-alphabet-font-realistic-typography-x_67155-13365.jpg?semt=ais_hybrid&w=740&q=80" width="200"> 
+</div>
+<h1><b>ВНИМАНИЕ! ЭТО САЙТ РЕГИСТРАЦИИ РЕКЛАМЫ, А НЕ РАЗМЕЩЕНИЯ.</b></h1>
+<h1><em>Ваша реклама появится автоматически на сайте XcortexWIKI</em></h1>
+
+<button onclick="RegistrReklam()">
+  Зарегистрировать рекламу
+</button>
+
+<div id="Registr" style="display: none; color: black; background-color: white; border-radius: 30px; padding: 25px; margin-top: 14px;">
+  <h3>Название баннера вашей рекламы</h3>
+  <input type="text" placeholder="Например: Летняя распродажа" id="name">
+
+  <h3>ЕРС и ERID</h3>
+  <input type="text" placeholder="Только ЕРС" id="ers">
+  <input type="text" placeholder="ТОЛЬКО ERID" id="ERID">
+
+  <h3>Ссылка на изображение (URL)</h3>
+  <small>Вставьте сюда ссылку на картинку (например, из Imgur, Google Drive, GitHub). Файл не прикрепляется, но ссылка будет в письме.</small>
+  <br><br>
+  <input type="url" placeholder="https://..." id="imageLink">
+
+  <h3>Номер телефона для связи</h3>
+  <input type="text" placeholder="7 (***) *** **-**" id="number">
+
+  <button id="sendBtn" style="margin-top: 20px;">
+    Отправить данные
+  </button>
+
+  <h4>Наш номер и электронная почта для связи:</h4>
+  <p>79854573125</p>
+  <p>artem.ovsyankin33@gmail.com</p>
+</div>
+
+<script>
+  function RegistrReklam() {
+    document.querySelector('#Registr').style.display = "block";
+  }
+
+  document.getElementById('sendBtn').addEventListener('click', function() {
+    const valName = encodeURIComponent(document.getElementById('name').value);
+    const valErs = encodeURIComponent(document.getElementById('ers').value);
+    const valErid = encodeURIComponent(document.getElementById('ERID').value);
+    const valImage = encodeURIComponent(document.getElementById('imageLink').value);
+    const valNumber = encodeURIComponent(document.getElementById('number').value);
+
+    const lineBreak = '%0A';
+    const subject = encodeURIComponent('Заявка с сайта: регистрация рекламы');
+
+    // Подписи к полям заданы здесь — это то, что увидит получатель письма
+    const bodyParts = [
+      'Название баннера: ' + valName,
+      'ЕРС: ' + valErs,
+      'ERID: ' + valErid,
+      'Ссылка на изображение: ' + (valImage || 'не указана'),
+      'Номер телефона: ' + valNumber
+    ];
+
+    const body = bodyParts.join(lineBreak);
+    const mailtoLink = `mailto:artem.ovsyankin33@gmail.com?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoLink;
+  });
+</script>
